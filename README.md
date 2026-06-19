@@ -1,5 +1,12 @@
 # Security Center GitHub Model
 
+已完成整理成 **完整 GitHub Model 專案**，並通過基本測試。
+
+📦 下載完整專案 ZIP：  
+`security-center-complete-github-model.zip`
+
+---
+
 多語言防護中心專案，支援 **中文 / English / 日本語**，包含桌面 GUI、Web Dashboard、FastAPI API、SQLite 資料庫、Docker 與 GitHub Actions。
 
 ---
