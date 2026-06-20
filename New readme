@@ -1,0 +1,419 @@
+# Security Center GitHub Model — Final Canvas Fixed Edition
+
+完整 **Security Center GitHub Model 最終版**。
+
+本版本已完成：
+
+- 所有主要功能實裝
+- Canvas 按鈕無反應問題修正
+- JavaScript 語法檢查通過
+- Python 功能測試通過
+- 無 `psutil`
+- 無 `process_iter`
+- 白名單支援手動新增 / 手動消除
+- 已移除清空白名單功能
+- 隔離區支援刪除 / 還原
+- 刪除 / 還原加入防呆確認
+- Run All Functions 不會刪除或還原隔離區檔案
+
+---
+
+## 1. Project Overview
+
+Security Center 是一個防禦性安全中心示範專案，包含：
+
+- Python CustomTkinter 桌面 GUI
+- HTML Canvas 瀏覽器展示版
+- SQLite 白名單
+- SQLite 威脅資料庫
+- SandboxDrill 沙盒掃描
+- 隔離區管理
+- 手動遊戲模式
+- 多語言介面
+- GitHub Actions CI
+- Release ZIP workflow
+
+本專案只操作本地測試資料夾，不會修改系統設定、不會攻擊網路、不會刪除系統檔案。
+
+---
+
+## 2. Project Structure
+
+```text
+security-center-github-model/
+├─ README.md
+├─ LICENSE
+├─ requirements.txt
+├─ pyproject.toml
+├─ .gitignore
+├─ .github/
+│  └─ workflows/
+│     ├─ ci.yml
+│     └─ release.yml
+├─ scripts/
+│  ├─ run_gui.sh
+│  └─ run_tests.sh
+├─ merged_security_center_full.py
+├─ canvas_all_features_no_psutil.html
+├─ security_system.py
+├─ sandbox_drill.py
+├─ run_all_tests.py
+├─ RUN_AND_DISPLAY_FUNCTIONS.md
+├─ CANVAS_BUTTON_FIX_REPORT.md
+├─ test_output_fixed_canvas.txt
+└─ verification_all_functions_final.txt
+```
+
+---
+
+## 3. Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+Requirements:
+
+```text
+customtkinter>=5.2.2
+```
+
+No `psutil` is required.
+
+---
+
+## 4. Run Desktop GUI
+
+```bash
+python merged_security_center_full.py
+```
+
+The desktop GUI includes:
+
+- 狀態頁面
+- 安全性頁面
+- 隱私頁面
+- 性能頁面
+- 應用程式頁面
+- 白名單管理
+- 威脅資料庫
+- 沙盒測試
+- 隔離區管理
+- 遊戲防護
+- 遊戲模式
+- 中文 / English / 日本語
+- 分數 / 等級 / 連擊 / 成就
+
+---
+
+## 5. Open Canvas Demo
+
+Open this file in your browser:
+
+```text
+canvas_all_features_no_psutil.html
+```
+
+Canvas functions:
+
+- 智能掃描
+- 白名單管理
+- 手動新增白名單
+- 手動消除白名單
+- 威脅資料庫
+- 遊戲模式 ON/OFF
+- 建立測試環境
+- 掃描並隔離
+- 瀏覽隔離區
+- 隔離區管理
+- 還原防呆確認
+- 刪除防呆確認
+- 系統修復
+- Run All Functions
+- Reset
+
+---
+
+## 6. Canvas Button Fix
+
+Previous issue:
+
+> 所有功能鍵按了後都沒反應。
+
+Cause:
+
+JavaScript strings contained raw line breaks inside `confirm()` or `log()`, causing browser script parsing to fail.
+
+Fixed format:
+
+```javascript
+confirm("防呆確認：刪除隔離檔案\n\n確定要徹底刪除隔離紀錄嗎？")
+```
+
+Validation:
+
+```text
+Node JS syntax check returncode = 0
+Node JS syntax stdout = OK
+```
+
+---
+
+## 7. Whitelist Features
+
+Implemented:
+
+- 手動新增白名單
+- 手動消除白名單
+- 重複白名單防呆
+- 重新整理白名單
+- 顯示白名單總數
+- SQLite 永久保存
+
+Removed:
+
+- 清空白名單功能
+- Canvas 清空白名單按鈕
+- Python GUI 清空白名單按鈕
+
+Example whitelist entries:
+
+```text
+trusted_app.exe
+192.168.1.10
+https://example.com
+```
+
+---
+
+## 8. Threat Database
+
+Implemented:
+
+- 預設威脅資料
+- 新增威脅資料
+- 顯示威脅種類
+- 顯示威脅名稱
+- 顯示風險等級
+- 智能掃描摘要
+- 高風險統計
+
+Default demo threats include:
+
+```text
+Trojan.Generic
+Keylogger.Agent
+Suspicious Port Scan
+Tracker Cookie
+Virus.Win32.Eicar
+```
+
+---
+
+## 9. SandboxDrill
+
+Implemented:
+
+- 建立測試環境
+- 建立 EICAR 測試檔
+- 掃描本地測試資料夾
+- 偵測測試威脅
+- 移動威脅檔案到隔離區
+- 瀏覽隔離區
+- 系統修復示範
+- Reset demo environment
+
+Created folders:
+
+```text
+temp_work/
+quarantine_zone/
+restored_files/
+```
+
+---
+
+## 10. Quarantine Manager
+
+Implemented in Python GUI:
+
+```python
+def open_quarantine_manager(self):
+    """開啟隔離區管理介面"""
+    top = ctk.CTkToplevel(self)
+    top.title("隔離區管理")
+    top.geometry("500x400")
+
+    ctk.CTkLabel(top, text="隔離中的威脅檔案:", font=("Arial", 16)).pack(pady=10)
+```
+
+Additional implemented functions:
+
+- `refresh_quarantine_ui()`
+- `delete_and_refresh(name)`
+- `restore_and_refresh(name)`
+- `delete_quarantine_file(name)`
+- `restore_file(name)`
+
+Quarantine actions:
+
+- 刪除隔離檔案
+- 還原隔離檔案
+- 還原到 `restored_files/`
+- 只操作 `quarantine_zone/` 內檔案
+
+---
+
+## 11. Safety Confirmation
+
+Delete confirmation:
+
+```python
+messagebox.askyesno("防呆確認：刪除隔離檔案", confirm_text)
+```
+
+Restore confirmation:
+
+```python
+messagebox.askyesno("防呆確認：還原隔離檔案", confirm_text)
+```
+
+Purpose:
+
+- 防止誤觸還原潛在惡意程式
+- 防止誤觸刪除重要隔離紀錄
+
+Canvas also uses `confirm()` for delete and restore actions.
+
+---
+
+## 12. Run All Functions Safety
+
+`Run All Functions` will:
+
+- run smart scan
+- show whitelist
+- show threat database
+- create test environment
+- scan and quarantine
+- list quarantine
+- run recovery
+
+`Run All Functions` will NOT:
+
+- delete quarantine files
+- restore quarantine files
+- clean quarantine folder
+
+Verification:
+
+```text
+Run All kept quarantine: True
+Run All did not restore: True
+```
+
+---
+
+## 13. Manual Game Mode
+
+Implemented:
+
+- 手動遊戲模式 ON/OFF
+- 遊戲模式 ON 時跳過掃描
+- 不讀取系統程序
+- 不使用 psutil
+- 不使用 process_iter
+
+Game mode result example:
+
+```text
+Game mode is ON. Scan skipped for performance.
+```
+
+---
+
+## 14. Run Tests
+
+```bash
+python run_all_tests.py
+```
+
+Expected result:
+
+```text
+Manual whitelist remove: True
+Duplicate whitelist blocked: True
+Normal quarantined: 1
+Restore ok: True
+Delete ok: True
+Run All kept quarantine: True
+Run All did not restore: True
+Manual game mode skipped: True
+Reset ok: True
+PASS
+```
+
+---
+
+## 15. GitHub Upload
+
+```bash
+git init
+git add .
+git commit -m "Security Center final canvas fixed edition"
+git branch -M main
+git remote add origin https://github.com/akarenka/security-center-github-model.git
+git push -u origin main
+```
+
+---
+
+## 16. Create Release
+
+```bash
+git tag v1.4.0
+git push origin v1.4.0
+```
+
+GitHub Actions will build the release ZIP.
+
+---
+
+## 17. Safety Scope
+
+This project is a defensive local demo.
+
+It does not:
+
+- modify OS settings
+- delete system files
+- attack networks
+- exploit devices
+- read process lists
+- use psutil
+- use process_iter
+
+It only creates and uses local demo folders:
+
+```text
+temp_work/
+quarantine_zone/
+restored_files/
+security_config.db
+```
+
+---
+
+## 18. Status
+
+Final status:
+
+```text
+Canvas buttons fixed: True
+All functions implemented: True
+Python tests passed: True
+Node JS syntax check passed: True
+psutil removed: True
+clear whitelist removed: True
+Run All safe behavior: True
+```
